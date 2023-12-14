@@ -1,6 +1,9 @@
 # Use a base image with build tools and dependencies
 FROM ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
+ENV RISCV=/opt/riscv
+ENV PATH=$RISCV/bin:$PATH
+WORKDIR $RISCV
 
 # Install necessary dependencies (GCC, RISC-V toolchain, etc.)
 RUN apt-get update \
@@ -99,16 +102,9 @@ RUN groupadd --gid 3434 riscvuser \
 
 
 # Install riscv-tools
-RUN git clone https://github.com/riscv/riscv-gnu-toolchain 
-RUN cd riscv-gnu-toolchain \ 
-&& ./configure --prefix=/opt/riscv --enable-multilib \ 
-&& make
+RUN git clone https://github.com/riscv/riscv-gnu-toolchain
+RUN cd riscv-gnu-toolchain && ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d --enable-multilib && make
+
 
 # Set working directory
 WORKDIR /build-here
-
-# Copy the entire monorepo into the container
-COPY . /build-here/
-
-# Default command to run when the container starts
-CMD ["/bin/bash"]
