@@ -100,10 +100,10 @@ RUN groupadd --gid 3434 riscvuser \
     && echo 'riscvuser ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-riscvuser \
     && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
 
-
+RUN apt-get install -y gcc-riscv64-unknown-elf
 # Install riscv-tools
 RUN git clone https://github.com/riscv/riscv-gnu-toolchain
-RUN cd riscv-gnu-toolchain && ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d --enable-multilib && make
+RUN cd riscv-gnu-toolchain && ./configure --with-arch=rv32gc --with-abi=ilp32d --enable-multilib && make
 
 
 # Set working directory
