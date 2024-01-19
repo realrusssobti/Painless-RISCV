@@ -18,6 +18,7 @@ SECTIONS
 
     __global_pointer$ = .  + 0x800;
     .data : {
+        __bss_start = .;
         *(.sbss)
         *(COMMON)
         *(.bss)

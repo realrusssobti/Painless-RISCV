@@ -15,7 +15,7 @@ ASP_OBJ_FILES := $(patsubst src/%.S,build/%.o,$(ASP_FILES))
 
 # settings for the compilers
 ifneq ($(C_FILES),)
-RISCV_PREFIX = riscv64-unknown-elf-
+RISCV_PREFIX = riscv32-unknown-elf-
 else
 RISCV_PREFIX = riscv64-unknown-elf-
 endif
